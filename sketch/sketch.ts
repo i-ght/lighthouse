@@ -1,8 +1,16 @@
-/* CREDIT: https://openprocessing.org/sketch/15988/
+/*
+   CREDIT: https://openprocessing.org/sketch/15988/
    Tear Drop Curve by Michael
+   M. Kontopoulos  (11.2010)
+   TEARDROP CURVE
+   Based on the parametric equation found at
+   http://mathworld.wolfram.com/TeardropCurve.html
+  
    https://www.youtube.com/watch?v=334kdqpyzXQ
    Oh Micahel, Oh Jesus, You Know I'm Not To Blame!
-   You Know My Reputation, For Playing A Good Clean Game! */
+   You Know My Reputation, For Playing A Good Clean Game!
+*/
+
 function radiateRaindrop(r: number, a: number) {
   translate(-width/2,-height/2,0);
   
