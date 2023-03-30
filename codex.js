@@ -28,22 +28,6 @@ function radians(degrees) {
 }
 
 
-function line(
-   /** @type {CanvasRenderingContext2D}*/ 
-   gfx,
-   a,
-   b,
-   strokeStyle = "",
-   lineWidth = 1
-) {
-  gfx.strokeStyle = strokeStyle;
-  gfx.lineWidth = lineWidth;
-  gfx.beginPath();
-  gfx.moveTo(...a);
-  gfx.lineTo(...b);
-  gfx.stroke();
-}
-
 function ellipse(
   /** @type {CanvasRenderingContext2D}*/ 
   gfx,
@@ -65,34 +49,10 @@ function ellipse(
   );
 }
 
-function rect(
-  /** @type {CanvasRenderingContext2D}*/ 
-  gfx,
-  color,
-  x,
-  y,
-  w,
-  h
-) {
-  gfx.clearRect(x, y, w, h);
-  gfx.fillStyle = color;
-  gfx.fillRect(x, y, w, h);
-}
-
-const colors =  [
-  "black",
-  "red",
-  "yellow",
-  "whitesmoke",
-  "green",
-  "blue",
-  "cyan",
-  "purple"
-];
-
 function scale(number, inMin, inMax, outMin, outMax) {
   return (number - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
 }
+
 
 function raindrop(/** @type {CanvasRenderingContext2D}*/ gfx, r, a) {
   gfx.save();
@@ -110,16 +70,6 @@ function raindrop(/** @type {CanvasRenderingContext2D}*/ gfx, r, a) {
   gfx.restore();
 }
 
-
-/* function scale(n, start1, stop1, start2, stop2) {
-  const newval = (n - start1) / (stop1 - start1) * (stop2 - start2) + start2;
-  return newval;
-  if (start2 < stop2) {
-    return constrain(newval, start2, stop2);
-  } else {
-    return constrain(newval, stop2, start2);
-  }
-} */
 
 function clearCanvas(gfx) {
   gfx.save();
