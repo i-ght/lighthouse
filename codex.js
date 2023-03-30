@@ -26,6 +26,8 @@ function ellipse(
   rotation = 0,
   angle = [0, Math.PI * 2],
   counterClockwise = false,
+  stroke = false,
+  fill = false
 ) {
   gfx.ellipse(
     center[X],
@@ -37,6 +39,12 @@ function ellipse(
     angle[1],
     counterClockwise
   );
+  if (stroke) {
+    gfx.stroke();
+  }
+  if (fill) {
+    gfx.fill();
+  }
 }
 
 function scale(number, inMin, inMax, outMin, outMax) {
@@ -46,20 +54,18 @@ function scale(number, inMin, inMax, outMin, outMax) {
 
 function raindrop(/** @type {CanvasRenderingContext2D}*/ gfx, r, a) {
   gfx.save();
-  gfx.translate(-width / 2, -height / 2);
-  
-  gfx.fillStyle = "cyan";
   gfx.beginPath();
   
+  gfx.strokeStyle = "cyan";
+  gfx.fillStyle = "cyan";
+
   for (let i = 0; i < 360; i++) { 
     const x = width / 2 + Math.cos(radians(i)) * r;
     const y = height / 2 + Math.sin(radians(i)) * Math.pow(Math.sin(radians(i/2)), a) * r;
-    ellipse(gfx, [x, y], [1, 1]);
+    ellipse(gfx, [x, y], [3, 3]);
   }
 
   gfx.fill();
-  gfx.closePath();
-
   gfx.restore();
 }
 
@@ -87,7 +93,7 @@ function changePhase(phase, /*s* @type {CanvasRenderingContext2D}*/ gfx) {
   let b = scale(a+=9, 0, width, 0, 9);
   raindrop(gfx, 98.6, b);
 
-  if (a >= 999) {
+  if (a >= 3333) {
     a = 0;
   }
 
@@ -99,7 +105,7 @@ function changePhase(phase, /*s* @type {CanvasRenderingContext2D}*/ gfx) {
 
 function codex() {
   const [_, gfx] = getGfxCtx();
-  gfx.translate(width/2, height/2);
+
   requestAnimationFrame(phase => {
     changePhase(phase, gfx);
   });
