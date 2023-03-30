@@ -4,16 +4,6 @@ const height = 826;
 const X = 0;
 const Y = 1;
 
-function dequeue(selections) {
-  const ret = selections.shift();
-  selections.push(ret);
-  return ret;
-}
-
-function range(size, startAt = 0) {
-  return [...Array(size).keys()].map(i => i + startAt);
-}
-
 function getGfxCtx() {
   /** @type {HTMLCanvasElement}  */
   const canvas = document.getElementById("canvas0");
@@ -58,15 +48,18 @@ function raindrop(/** @type {CanvasRenderingContext2D}*/ gfx, r, a) {
   gfx.save();
   gfx.translate(-width / 2, -height / 2);
   
+  gfx.fillStyle = "cyan";
   gfx.beginPath();
+  
   for (let i = 0; i < 360; i++) { 
     const x = width / 2 + Math.cos(radians(i)) * r;
     const y = height / 2 + Math.sin(radians(i)) * Math.pow(Math.sin(radians(i/2)), a) * r;
     ellipse(gfx, [x, y], [1, 1]);
   }
 
-  gfx.fillStyle = "cyan";
   gfx.fill();
+  gfx.closePath();
+
   gfx.restore();
 }
 
