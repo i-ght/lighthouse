@@ -3,6 +3,7 @@ const width = 1337;
 const height = 826;
 const X = 0;
 const Y = 1;
+let [mouseX, mouseY] = [0, 0];
 
 function getGfxCtx() {
   /** @type {HTMLCanvasElement}  */
@@ -25,9 +26,7 @@ function ellipse(
   radius,
   rotation = 0,
   angle = [0, Math.PI * 2],
-  counterClockwise = false,
-  stroke = false,
-  fill = false
+  counterClockwise = false
 ) {
   gfx.ellipse(
     center[X],
@@ -39,12 +38,6 @@ function ellipse(
     angle[1],
     counterClockwise
   );
-  if (stroke) {
-    gfx.stroke();
-  }
-  if (fill) {
-    gfx.fill();
-  }
 }
 
 function scale(number, inMin, inMax, outMin, outMax) {
@@ -54,15 +47,19 @@ function scale(number, inMin, inMax, outMin, outMax) {
 
 function raindrop(/** @type {CanvasRenderingContext2D}*/ gfx, r, a) {
   gfx.save();
-  gfx.beginPath();
+
   
   gfx.strokeStyle = "cyan";
   gfx.fillStyle = "cyan";
+  gfx.beginPath();
 
   for (let i = 0; i < 360; i++) { 
+    gfx.beginPath();
     const x = width / 2 + Math.cos(radians(i)) * r;
     const y = height / 2 + Math.sin(radians(i)) * Math.pow(Math.sin(radians(i/2)), a) * r;
-    ellipse(gfx, [x, y], [3, 3]);
+    ellipse(gfx, [x, y], [10, 10]);
+
+    gfx.fill();
   }
 
   gfx.fill();
@@ -85,15 +82,15 @@ function changeCanvasBackgroundColor(gfx, color) {
   gfx.restore();
 }
 
-let a = 2.3
+let a = 0;
 function changePhase(phase, /*s* @type {CanvasRenderingContext2D}*/ gfx) {
   clearCanvas(gfx);
   changeCanvasBackgroundColor(gfx, "black");
 
-  let b = scale(a+=9, 0, width, 0, 9);
-  raindrop(gfx, 98.6, b);
+  let b = scale(mouseX, 0, width, 0, 7);
+  raindrop(gfx, 333, b);
 
-  if (a >= 3333) {
+  if (a >= 333) {
     a = 0;
   }
 
@@ -104,7 +101,11 @@ function changePhase(phase, /*s* @type {CanvasRenderingContext2D}*/ gfx) {
 
 
 function codex() {
-  const [_, gfx] = getGfxCtx();
+  const [canvas, gfx] = getGfxCtx();
+  canvas.addEventListener("mousemove", event => {
+    mouseX = event.offsetX;
+    mouseY = event.offsetY;
+  })
 
   requestAnimationFrame(phase => {
     changePhase(phase, gfx);
